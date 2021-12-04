@@ -36,7 +36,7 @@ public class Day1Part2 implements InitializingBean {
             currentWindow[0] = previousWindow[1];
             currentWindow[1] = previousWindow[2];
         }
-        System.out.println("Window Increases Count: " + counter);
+        System.out.println(this.getClass().getSimpleName() + " :: Window Increases Count: " + counter);
     }
 
     private int arraySum(int[] val){

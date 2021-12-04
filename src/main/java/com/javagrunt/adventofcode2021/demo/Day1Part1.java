@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 @Component
-public class Day1 implements InitializingBean {
+public class Day1Part1 implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -28,7 +28,7 @@ public class Day1 implements InitializingBean {
             }
             previousValue = currentValue;
         }
-        System.out.println("Counter: " + counter);
+        System.out.println(this.getClass().getSimpleName() + " :: Counter: " + counter);
     }
 
 }
