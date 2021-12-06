@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 @Component
-public class Day1Part2 implements InitializingBean {
+public class Day1Part2 extends AdventOfCodePuzzle implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -36,7 +36,7 @@ public class Day1Part2 implements InitializingBean {
             currentWindow[0] = previousWindow[1];
             currentWindow[1] = previousWindow[2];
         }
-        System.out.println(this.getClass().getSimpleName() + " :: Window Increases Count: " + counter);
+        setAnswer(String.valueOf(counter));
     }
 
     private int arraySum(int[] val){

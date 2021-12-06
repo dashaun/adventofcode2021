@@ -8,16 +8,16 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 @Component
-public class Day1Part1 implements InitializingBean {
+public class Day1Part1 extends AdventOfCodePuzzle implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
         int counter = 0;
         int previousValue;
         int currentValue;
-        // open input stream test.txt for reading purpose.
+        String filename = "input.1.1.txt";
         BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(this.getClass().getClassLoader()
-                .getResourceAsStream("input.1.1.txt"))));
+                .getResourceAsStream(filename))));
 
         previousValue = Integer.parseInt(br.readLine());
         String thisLine;
@@ -28,7 +28,7 @@ public class Day1Part1 implements InitializingBean {
             }
             previousValue = currentValue;
         }
-        System.out.println(this.getClass().getSimpleName() + " :: Counter: " + counter);
+        setAnswer(String.valueOf(counter));
     }
 
 }

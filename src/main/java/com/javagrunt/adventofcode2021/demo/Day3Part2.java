@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
-public class Day3Part2 implements InitializingBean {
+public class Day3Part2 extends AdventOfCodePuzzle implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -19,10 +19,7 @@ public class Day3Part2 implements InitializingBean {
         String csr = co2ScrubberRating(readIntoList(), 0);
         int ogrInt = Integer.parseInt(ogr, 2);
         int csrInt = Integer.parseInt(csr,2);
-        System.out.println(this.getClass().getSimpleName() + " :: OGR   " + ogr + " intVal " + ogrInt);
-        System.out.println(this.getClass().getSimpleName() + " :: CSR   " + csr + " intVal " + csrInt);
-        System.out.println(this.getClass().getSimpleName() + " :: Life Support Rating: " + (ogrInt * csrInt));
-
+        setAnswer(String.valueOf(ogrInt * csrInt));
     }
 
     private List<String> readIntoList() throws IOException {

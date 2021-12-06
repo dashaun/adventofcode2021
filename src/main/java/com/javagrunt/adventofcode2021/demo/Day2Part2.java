@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 @Component
-public class Day2Part2 implements InitializingBean {
+public class Day2Part2 extends AdventOfCodePuzzle implements InitializingBean {
 
     private static final String FORWARD = "forward";
     private static final String DOWN = "down";
@@ -40,9 +40,7 @@ public class Day2Part2 implements InitializingBean {
                 System.err.println("THIS SHOULD NOT HAPPEN");
             }
         }
-        System.out.println(this.getClass().getSimpleName() + " :: Horizontal Position " + horizontalPosition);
-        System.out.println(this.getClass().getSimpleName() + " :: Depth               " + depth);
         int answer = horizontalPosition * depth;
-        System.out.println(this.getClass().getSimpleName() + " :: Final Answer        " + answer);
+        setAnswer(String.valueOf(answer));
     }
 }

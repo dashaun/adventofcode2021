@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 @Component
-public class Day3Part1 implements InitializingBean {
+public class Day3Part1 extends AdventOfCodePuzzle implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -56,14 +56,9 @@ public class Day3Part1 implements InitializingBean {
                 epsilon.append("1");
             }
         }
-        System.out.println(this.getClass().getSimpleName() + " :: Gamma   " + gamma);
         int gammaInt = Integer.parseInt(gamma.toString(), 2);
-        System.out.println(this.getClass().getSimpleName() + " :: Gamma as decimal " + gammaInt);
-        System.out.println(this.getClass().getSimpleName() + " :: Epsilon " + epsilon);
         int epsilonInt = Integer.parseInt(epsilon.toString(), 2);
-        System.out.println(this.getClass().getSimpleName() + " :: Epsilon as decimal " + epsilonInt);
-
         int power = gammaInt * epsilonInt;
-        System.out.println(this.getClass().getSimpleName() + " :: Power   " + power);
+        setAnswer(String.valueOf(power));
     }
 }
