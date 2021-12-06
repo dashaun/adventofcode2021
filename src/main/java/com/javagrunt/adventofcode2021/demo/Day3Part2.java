@@ -4,7 +4,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -12,58 +15,99 @@ public class Day3Part2 implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        String ogr = oxygenGeneratorRating(readIntoList(), 0);
+        String csr = co2ScrubberRating(readIntoList(), 0);
+        int ogrInt = Integer.parseInt(ogr, 2);
+        int csrInt = Integer.parseInt(csr,2);
+        System.out.println(this.getClass().getSimpleName() + " :: OGR   " + ogr + " intVal " + ogrInt);
+        System.out.println(this.getClass().getSimpleName() + " :: CSR   " + csr + " intVal " + csrInt);
+        System.out.println(this.getClass().getSimpleName() + " :: Life Support Rating: " + (ogrInt * csrInt));
 
+    }
+
+    private List<String> readIntoList() throws IOException {
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(Objects.requireNonNull(
                         this.getClass().getClassLoader()
-                                .getResourceAsStream("input.3.1.test.txt"))));
-        //Assume the file has a line to start with
+                                .getResourceAsStream("input.3.1.txt"))));
+
         String thisLine;
         thisLine = br.readLine();
 
-        int[] ones = new int[thisLine.length()];
-        int[] zeros = new int[thisLine.length()];
+        ArrayList<String> diagnosticData = new ArrayList<>();
+        diagnosticData.add(thisLine);
 
-        for(int pos = 0;  pos < thisLine.length(); pos ++){
-            if(thisLine.charAt(pos) == '1'){
-                ones[pos]++;
-            }else if(thisLine.charAt(pos) == '0'){
-                zeros[pos]++;
+        while ((thisLine = br.readLine()) != null) {
+            diagnosticData.add(thisLine);
+        }
+        return diagnosticData;
+    }
+
+    private String co2ScrubberRating(List<String> input, int index){
+        int ones = 0;
+        int zeros = 0;
+
+        for(String i: input){
+            if(i.charAt(index) == '1'){
+                ones+=1;
             }else{
-                System.err.println("This shouldn't happen");
+                zeros+=1;
             }
         }
 
-        while ((thisLine = br.readLine()) != null) {
-            for(int pos = 0;  pos < thisLine.length(); pos ++){
-                if(thisLine.charAt(pos) == '1'){
-                    ones[pos]++;
-                }else if(thisLine.charAt(pos) == '0'){
-                    zeros[pos]++;
-                }else{
-                    System.err.println("This shouldn't happen");
+        List<String> filtered = new ArrayList<>();
+        if (zeros <= ones) {
+            for (String i : input) {
+                if (i.charAt(index) == '0') {
+                    filtered.add(i);
+                }
+            }
+        } else {
+            for (String i : input) {
+                if (i.charAt(index) == '1') {
+                    filtered.add(i);
                 }
             }
         }
-        StringBuilder gamma = new StringBuilder();
-        StringBuilder epsilon = new StringBuilder();
-        for(int pos = 0; pos < ones.length ; pos++){
-            if(ones[pos] > zeros[pos]){
-                gamma.append("1");
-                epsilon.append("0");
+
+        if (filtered.size() == 1) {
+            return filtered.get(0);
+        } else {
+            return co2ScrubberRating(filtered, index + 1);
+        }
+    }
+
+    private String oxygenGeneratorRating(List<String> input, int index) {
+        int ones = 0;
+        int zeros = 0;
+
+        for(String i: input){
+            if(i.charAt(index) == '1'){
+               ones+=1;
             }else{
-                gamma.append("0");
-                epsilon.append("1");
+                zeros+=1;
             }
         }
-        System.out.println(this.getClass().getSimpleName() + " :: Gamma   " + gamma);
-        int gammaInt = Integer.parseInt(gamma.toString(), 2);
-        System.out.println(this.getClass().getSimpleName() + " :: Gamma as decimal " + gammaInt);
-        System.out.println(this.getClass().getSimpleName() + " :: Epsilon " + epsilon);
-        int epsilonInt = Integer.parseInt(epsilon.toString(), 2);
-        System.out.println(this.getClass().getSimpleName() + " :: Epsilon as decimal " + epsilonInt);
 
-        int power = gammaInt * epsilonInt;
-        System.out.println(this.getClass().getSimpleName() + " :: Power   " + power);
+        List<String> filtered = new ArrayList<>();
+        if (ones >= zeros) {
+            for (String i : input) {
+                if (i.charAt(index) == '1') {
+                    filtered.add(i);
+                }
+            }
+        } else {
+            for (String i : input) {
+                if (i.charAt(index) == '0') {
+                    filtered.add(i);
+                }
+            }
+        }
+
+        if (filtered.size() == 1) {
+            return filtered.get(0);
+        } else {
+            return oxygenGeneratorRating(filtered, index + 1);
+        }
     }
 }
